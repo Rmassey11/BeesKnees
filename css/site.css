@@ -5,6 +5,33 @@
     --white-color: #e7e7e7;
 }
 
+.bold{
+    font-weight: bold;
+}
+
+.boldGold{
+    font-weight: bold;
+    color: gold;
+}
+
+.var{
+    color: blue;
+}
+
+.Bees{
+    color: blue;
+}
+
+.Knees{
+    color: red;
+}
+
+.BeesKnees{
+    color: yellowgreen;
+    font-weight: bold;
+
+}
+
 body {
     color:var(--dark-color);
 }

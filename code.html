@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project By Ron Massey</title>
+    <title>BeesKnees: A Coding Project By Ron Massey</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +22,7 @@
     <!----***** Nav Section ***** -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="/img/RMMark Color no background.svg" class="d-inline-block align-text-top" width="50" height="30" alt="Ron Massey Mark"> APP NAME</a>
+            <a class="navbar-brand" href="#"><img src="/img/RMMark Color no background.svg" class="d-inline-block align-text-top" width="50" height="30" alt="Ron Massey Mark"> BeesKnees</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -39,7 +39,7 @@
                         <a class="nav-link active" aria-current="page" href="/code.html">The Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">Git Repo</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/Rmassey11/BeesKnees.git">Git Repo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="#">About</a>
@@ -51,21 +51,133 @@
 <!----***** Main Section ***** -->
 <main class="flex-shrink-0">
     <div class="container px-5 py-5 mt-5">
-        <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+        <h2 class="border-1 border-bottom border-dark">The Code for BeesKnees</h2>
         <div class="row row-cols-1 row-cols-lg-2">
             <div class="col-lg-8">
                 <pre class="line-numbers"><code class="language-javascript">
-                    //Call Hello World
-                    function HelloWorld(){
-                        alert("Hello World");
+                    //Get Values from the page
+                    //Controller Function
+                    function getValues(){
+                        let beesValue = document.getElementById("beesValue").value;
+                        let kneesValue = document.getElementById("kneesValue").value;
+                        //Parse into Integers
+                        beesValue = parseInt(beesValue);
+                        kneesValue = parseInt(kneesValue);
+                        //Check that the numbers are Integers
+                        if(Number.isInteger(beesValue) && Number.isInteger(kneesValue)){
+                            //call beesKnees function
+                            let numbers = beesKneesB(beesValue, kneesValue);
+                            //call displayNumbers function
+                            displayNumbers(numbers);
+                        }else{
+                            alert("You must enter integers");
+                        }
+                    }
+
+                    //Count to 100 and find BeesKnees multiples
+                    //Logic Function
+                    function beesKnees(beesValue, kneesValue){
+                        let numbers = [];
+                        //Get numbers 1-100
+                        for(let index = 1; index<= 100; index++){
+                            //Check if numbers are multiples of our values
+                            if(index % beesValue == 0 && index % kneesValue == 0){
+                                numbers.push("BeesKnees");
+                            }else if(index % beesValue == 0){
+                                numbers.push("Bees");
+                            }else if(index % kneesValue == 0){
+                                numbers.push("Knees");
+                            }else{
+                                numbers.push(index)
+                            }
+                        }
+                        return numbers
+                    }
+
+                    //Best Solution
+                    function beesKneesB(beesValue, kneesValue){
+                        let numbers = [];
+                        for (let index =1; index <=100; index++){
+                            let value = ((index % beesValue == 0 ? "Bees" : "") + (index % kneesValue == 0 ? "Knees": "" ) || index);
+                            numbers.push(value);
+                        }
+                        return numbers;
+                    }
+
+                    //Display the values
+                    function displayNumbers(numbers){
+                        //Get the table body from the page
+                        let tableBody = document.getElementById("results");
+                        //Get the template
+                        let templateRows = document.getElementById("bnTemplate");
+                        //Clear the table
+                        tableBody.innerHTML = "";
+                        for(index = 0; index < numbers.length; index+= 5){
+                            let tableRow = document.importNode(templateRows.content, true);
+                            //Grab the td's to put into array
+                            let rowCols = tableRow.querySelectorAll("td");
+                            rowCols[0].classList.add(numbers[index]);
+                            rowCols[0].textContent = numbers[index];
+
+                            rowCols[1].classList.add(numbers[index+1]);
+                            rowCols[1].textContent = numbers[index+1];
+
+                            rowCols[2].classList.add(numbers[index+2]);
+                            rowCols[2].textContent = numbers[index+2];
+
+                            rowCols[3].classList.add(numbers[index+3]);
+                            rowCols[3].textContent = numbers[index+3];
+
+                            rowCols[4].classList.add(numbers[index+4]);
+                            rowCols[4].textContent = numbers[index+4];
+                            tableBody.appendChild(tableRow);
+                        }
                     }
                 </code>
                 </pre>
             </div>
             <div class="col-lg-4">
-                <p>The Code is structured in one function.</p>
-                <h5>Hello World</h5>
-                <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                <p>The Code is structured in three functions with one having a possible variant.</p>
+                <h5>getValues</h5>
+                <p>The <span class="boldGold">getValues</span> function retrieves our <span class="bold">"Bees"</span> and <span class="bold">"Knees"</span> values from the page.
+                    First we declare two Block Scoped variables called <span class="var">beesValue</span> and <span class="var">kneesValue</span>
+                    and set them equal to the values entered by the user. We then convert the numbers
+                    into Integers and run a check that they are truely Integers. If the values are not Integers
+                    we return an alert and the function exits. If the values are Integers we call the <span class="boldGold">beesKnees</span>
+                    function with those values passed into it. Once the <span class="boldGold">beesKnees</span> function returns its value we 
+                    then call the <span class="boldGold">displayNumbers</span> function with the new value passed in.
+                </p>
+                <h5>beesKnees</h5>
+                <p>The <span class="boldGold">beesKnees</span> function creates an array with the numbers 1-100 and checks to see if any are multiples
+                    of our <span class="var">beesValue</span> and <span class="var">kneesValue</span> so that we can replace those numbers with the appropriate word.
+                    To start we declare a Block Scoped variable called <span class="var">numbers</span> and set it to an empty array. Next we run a "for loop"
+                    starting at 1 and looping to 100. During each iteration of the loop we run 3 checks. The first check is to see 
+                    if the current index is a multiple of BOTH or <span class="var">beesValue</span> AND <span class="var">kneesValue</span>. If it is we push the word "BeesKnees" into our array.
+                    If its not a multiple of both we check each value individually. If the index is a multiple of our <span class="var">beesValue</span>, we push the word "Bees"
+                    into our array. If the index is a multiple of the <span class="var">kneesValue</span>, we push the word "Knees" into our array. If all 3 checks are false,
+                    we instead push the index value into the array. Once the loop finishes we return our new array back to <span class="boldGold">getValues</span> to be entered into 
+                    the <span class="boldGold">displayNumbers</span> function.
+                </p>
+                <h5>beesKneesB</h5>
+                <p>The <span class="boldGold">beesKneesB</span> function accomplishes exactly what the <span class="boldGold">beesknees</span> function does in a more efficient way.
+                    We begin the same by looping the numbers 1-100. Then instead of checking each value separately for multiples
+                    we employ the use of <span class="bold">Ternary operators</span>. This is accomplished by using the modulus operator as before and the ternary symbol <span class="bold">"?"</span>.
+                    We declare a variable <span class="var">value</span> and write our modulus statement to determine if the current index is a multiple of our <span class="var">beesValue</span>. If it is,
+                    the result is "true", if not then it is false. Using the Ternary operator we can take our true/false results and set what we want our value variable
+                    to be in each case. For the <span class="var">beesValue</span> it will be "Bees" if true and and empty string if false. We then do the same for our <span class="var">kneesValue</span> and add the results together.
+                    This will set the value to "Bees" + empty string, empty string + Knees, or Bees + Knees. In the case of our result being empty string + empty string then we use another Ternary operator
+                    to set the value to our index value. We then push the value to our numbers array, which is then returned to our <span class="boldGold">getValues</span> function.
+                </p>
+                <h5>displayNumbers</h5>
+                <p>
+                    The <span class="boldGold">displayNumbers</span> function takes our array created by the <span class="boldGold">beesKnees</span> function and displays it back onto the page for the user.
+                    First we call on the table from our page by declaring a variable <span class="var">tableBody</span> and linking it to our table by its Id. We then do the same for the template created on our App page and setting it to the <span class="var">templateRows</span>
+                    variable. Next we ensure that the table is cleared of any previous data so we can enter our new data using <span class="bold">innerHTML</span>. Then we loop through our numbers array passed to us. Our loop is
+                    set to increase its index value by 5 each time as we are going to enter rows of 5 values at a time. In order to use our template element we need to use the <span class="bold">importNode</span> method to create a document fragment in memory 
+                    that can be changed with the information we wish to add to it. After our fragment has been created we then use a <span class="bold">querySelector</span> to target all the "td" tags our fragment contains and set it to the variable <span class="var">rowCols</span> which creates an
+                    array of all the "td" tags. We then take our <span class="var">rowCols</span> array and add to it both a class the name of the index value and the actual index value itself. We also add 1-4 to our index for the second-fifth entry in each group to make sure the
+                    correct index is used for each data entry. After all 5 data entries are assigned we then appendChild our tableRow information the the end of our tableBody. This will display our data in a table of 5 columns without need to use temporate literals.
+                </p>
             </div>
         </div>
     </div>
